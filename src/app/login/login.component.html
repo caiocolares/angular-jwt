@@ -1,0 +1,48 @@
+<!-- COMPONENT: login -->
+<div 
+  class="login" 
+  [ngStyle]="{ 'background-image': 'url(' + login_bg + ')' }">
+
+  <div class="container">
+
+    <div class="row">
+
+      <div class="login-area">
+
+        <form method="post" (ngSubmit)="login()">
+
+          <div class="form-group">
+            <input 
+               class="validate form-control" 
+               id="username" 
+               name="username"
+               type="text" 
+               [(ngModel)]="userLogin.username"
+               placeholder="Username"
+               pInputText>
+          </div>
+
+          <div class="form-group">
+            <input 
+               class="validate form-control" 
+               id="password" 
+               name="password"
+               type="password" 
+               [(ngModel)]="userLogin.password"
+               placeholder="Password" 
+               pInputText>
+          </div>
+
+          <button 
+            class="btn btn-primary"
+            pButton
+            type="submit">
+
+            Login
+          </button>
+        </form>
+      </div>
+      <powered></powered>
+    </div>
+  </div>
+</div>

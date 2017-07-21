@@ -1,0 +1,20 @@
+<!-- COMPONENT: sector-select-custom  -->
+<label>
+
+  Selecione uma Setor
+</label>
+
+<select 
+  class="custom-select col-md-12" 
+  id="sector" 
+  [(ngModel)]="selectedSectorValue"
+  (ngModelChange)="selectionChanged($event)">
+
+  <option 
+    *ngFor="let sector of sectors" 
+    [ngValue]="sector" 
+    [selected]="sector == selectedSectorValue">
+
+  {{ sector.description  }}
+  </option>
+</select>

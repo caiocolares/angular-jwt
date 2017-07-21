@@ -1,0 +1,131 @@
+<!-- COMPONENT: collection -->
+<section 
+  class="collection bg section"
+  [ngStyle]="{ 'background-image': 'url(' + login_bg + ')' }">
+
+
+
+  <div class="container">
+    <div style="height: 75px" ></div>
+
+    <p
+       *ngIf="message && showMessage"
+       class="alert alert-success col-md-12">
+
+    {{ message }}
+    <i class="fa fa-check" aria-hidden="true"></i>
+    </p>
+
+     <div class="panel panel-primary">
+
+      <div class="panel-heading clearfix">    
+        <h4 class="panel-title pull-left" style="padding-top: 7.5px;">Coleções</h4>
+        <div class="btn-group pull-right">        
+          <button type="button" pButton icon="fa-plus" style="float:left" (click)="add()"></button>
+        </div>
+      </div>
+
+      <div class="panel-body">
+
+        <div class="row">
+
+          <p-dataTable 
+             [value]="collections" 
+             selectionMode="single" 
+             [(selection)]="collection" 
+             (onRowSelect)="onRowSelect($event)"
+             [rows]="10" 
+             [paginator]="true" 
+             [pageLinks]="3" 
+             [responsive]="true" 
+             [stacked]="stacked">
+
+            <p-column field="code" header="Código"></p-column>
+            <p-column field="description" header="Descrição"></p-column>       
+            <p-column field="startDate" header="Início"></p-column>            
+          </p-dataTable>
+        </div>
+
+      </div>
+
+    </div>
+
+    
+  </div>
+
+
+    <p-dialog 
+       header="Coleção (Edição)" 
+       [(visible)]="displayDialog" 
+       [responsive]="true" 
+       [width]="380" showEffect="fade" 
+       [modal]="true">
+      
+      <div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="collection">
+
+        <label>Código</label>
+        <input
+            type="text" 
+            class="form-control" 
+            minlength="3"
+            maxlength="30"
+            [(ngModel)]="collection.code"
+            placeholder="Código"            
+            required
+            pattern="[0-9]*">
+
+          <label>Descrição</label>
+
+          <input 
+            type="text" 
+            class="form-control" 
+            [(ngModel)]="collection.description"
+            placeholder="Descrição"
+            required
+            name="description">
+
+
+          <label>Data Inicial</label>
+          <p-calendar 
+             name="startDate"
+             required
+             [(ngModel)]="collection.startDate" 
+             [showIcon]="true">
+          </p-calendar> 
+
+
+          <label>Data Final</label>
+
+          <p-calendar 
+             name="endDate"
+             required
+             dateFormat="dd/mm/yy"
+             [(ngModel)]="collection.endDate" 
+             [showIcon]="true">
+          </p-calendar> 
+        </div>
+        
+        <div>
+
+          <label>Limite da Demanda</label>
+
+          <p-calendar 
+             name="limitDemand"
+             required
+             dateFormat="dd/mm/yy"
+             [(ngModel)]="collection.limitDemand" 
+             [showIcon]="true">
+          </p-calendar> 
+
+      </div>
+          <p-footer>
+        <div class="ui-dialog-buttonpane ui-helper-clearfix">            
+          <button type="button" pButton icon="fa-check" (click)="insertItem()" label="Salvar"></button>
+        </div>
+      </p-footer>
+    </p-dialog>
+
+
+
+  <powered></powered>
+</section>

@@ -1,0 +1,59 @@
+// COMPONENT: main
+@import '../assets/_variables'
+
+nav
+  width: 100%
+  position: fixed
+
+  margin: 0
+  border: none
+
+  background:
+    color: $brand-primary
+
+  @media(min-width: 768px)
+    border:
+      radius: 0
+
+  @media(max-width: 768px)
+    position: relative
+
+  .navbar-brand
+    
+    @media(max-width: 768px)
+      padding:
+        top: 14px
+
+  ul
+    background:
+      color: $brand-primary
+
+  a
+    padding:
+      top: 20px
+      bottom: 20px
+    
+    text:
+      transform: uppercase
+    font:
+      weight: 600
+
+    cursor: pointer
+    color: white
+  
+    &:hover,
+    &:focus
+      transition: all .3s ease-in-out
+      background:
+        color: darken( $brand-primary, 10 ) !important
+      color: white !important
+
+  .dropdown-menu
+    a
+      padding:
+        top: 10px
+        bottom: 10px
+
+
+ 
+  

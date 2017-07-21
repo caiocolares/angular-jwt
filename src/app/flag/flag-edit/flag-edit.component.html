@@ -1,0 +1,109 @@
+<!-- COMPONENT: flag-edit -->
+<section 
+  class="flag-edit bg section"
+  [ngStyle]="{ 'background-image': 'url(' + login_bg + ')' }">
+
+  <div class="container">
+
+    <a class="btn btn-primary" [routerLink]="['/flag']"> Voltar </a>
+
+    <p
+       *ngIf="message && showMessage"
+       class="alert alert-success col-md-12">
+
+    {{ message }}
+    <i class="fa fa-check" aria-hidden="true"></i>
+    </p>
+
+    <div class="row">
+
+      <span class="item-title col-md-12 text-center"> Bandeiras </span>
+    </div>
+
+    <form
+            #flagForm="ngForm"
+            (ngSubmit)="insertItem()" 
+            novalidate>
+
+      <div 
+            *ngIf="code.errors && (code.dirty || code.touched)"
+            class="alert alert-danger">
+
+        <div [hidden]="!code.errors.required">
+
+          Por favor, preencha o campo código.
+          <i class="fa fa-exclamation" aria-hidden="true"></i>
+        </div>
+
+        <div [hidden]="!code.errors.minlength">
+
+          O campo código deve conter no mínimo 2 caracteres.
+          <i class="fa fa-exclamation" aria-hidden="true"></i>
+        </div>
+
+        <div [hidden]="!code.errors.pattern">
+
+          O campo código deve conter somente números.
+          <i class="fa fa-exclamation" aria-hidden="true"></i>
+        </div>
+      </div>
+
+      <div
+                                       *ngIf="description.errors && (description.dirty || description.touched)"
+                                       class="alert alert-danger">
+
+        <div [hidden]="!description.errors.required">
+
+          Por favor, preencha o campo Descrição.
+          <i class="fa fa-exclamation" aria-hidden="true"></i>
+        </div>
+      </div>
+
+      <div class="row">
+
+        <div class="form-group col-md-3 no-padding-left">
+
+          <input
+             ngModel
+             type="text" 
+             class="form-control" 
+             [(ngModel)]="flag.code"
+             placeholder="Código"
+             name="code"
+             required
+             pattern="[0-9]*"
+             minlength="2"
+             [class.input-error]="code.errors && (code.dirty || code.touched)"
+             #code="ngModel">
+        </div>
+
+        <div class="form-group col-md-7">
+
+          <input 
+             ngModel
+             type="text" 
+             class="form-control" 
+             [(ngModel)]="flag.description"
+             placeholder="Descrição"
+             required
+             minlength="5"
+             [class.input-error]="description.errors && (description.dirty || description.touched)"
+             name="description"
+             #description="ngModel">
+        </div>
+
+        <div class="form-group col-md-2 no-padding-right">
+
+          <button 
+             class="btn btn-primary btn-block no-margin"
+             [disabled]="!flagForm.valid"> 
+
+            Salvar 
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <powered></powered>
+</section>

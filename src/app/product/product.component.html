@@ -1,0 +1,216 @@
+<!-- COMPONENT: product -->
+<section 
+  class="product bg section"
+  [ngStyle]="{ 'background-image': 'url(' + login_bg + ')' }">
+
+
+<p-dialog 
+           header="Cadastro de produtos" 
+           [(visible)]="displayDialog" 
+           [responsive]="true" 
+           [style]="{'width': '100%'}"
+           showEffect="fade" 
+           [modal]="true">
+<div class="container">
+    <div class="row">
+
+      <div class="col-md-8">
+        <div class="col-md-4">
+        <label>Referência</label>
+        <input
+           class="form-control" 
+           placeholder="Código" 
+           type="text" 
+           name="productId" 
+           [(ngModel)]="product.id.productId">
+        </div>
+        <div class="col-md-8">
+        <label>Nome</label>
+        <input 
+           class="form-control" 
+           placeholder="Nome" 
+           type="text" 
+           name="productName" 
+           [(ngModel)]="product.name">
+        </div>
+
+        <div class="col-md-6">
+           <label>Coleção</label>
+          <p-dropdown 
+           filter="filter"
+           name="collection"
+           [options]="collections"  
+           [style]="{'width':'100%'}" 
+           [(ngModel)]="product.collection" 
+           placeholder="Selecione uma coleção">
+        </p-dropdown>
+        </div>
+        <div class="col-md-6">
+        <label>Categoria</label>
+        <p-dropdown 
+           filter="filter"
+           name="category"
+           [options]="categories"  
+           [style]="{'width':'100%'}" 
+           [(ngModel)]="product.category" 
+           placeholder="Selecione uma categoria">
+        </p-dropdown>
+        </div>
+        <div class="col-md-8">
+        <label>Descrição</label>
+        <input 
+           class="form-control" 
+           placeholder="Descrição" 
+           type="text" 
+           name="description"
+           [(ngModel)]="product.description">
+        </div>
+      <div class="col-md-4">
+           <div *ngIf="showFileUploader" class="row custom-margin-bottom">
+        <label>Imagem</label>
+        <p-fileUpload 
+           name="file" 
+           (onBeforeSend)="onBeforeSend($event)"
+           url="{{imageUrlPost}}" 
+           (onError)="onError"
+           auto="auto" accept="image/*">
+        </p-fileUpload>            
+    </div>
+      </div>
+      <div class="col-md-10">
+        <label>Detalhes e Observações do Produto</label>
+              <textarea 
+           class="form-control" 
+           placeholder="Detalhes"
+           name="details" 
+           [(ngModel)]="product.detail">
+        </textarea>
+        </div>
+        <div class="col-md-2">
+             <button class="btn btn-primary" (click)="insert()">Salvar</button>
+        </div>
+
+      </div>
+      <div class="col-md-4">
+        <img src="{{imageUrlGet}}" style=" max-height: 250px " >
+      </div>
+    </div>
+
+
+    <div 
+           *ngIf="showSectorSelect" 
+           class="row custom-margin-bottom justify-content-between">
+      <div class="row">
+      <div class="col-md-3">
+        <label>Setor</label>
+        <p-dropdown 
+           filter="filter"
+           name="sector"
+           [options]="sectors"  
+           [style]="{'width':'250px'}" 
+           [(ngModel)]="sector" 
+           placeholder="Selecione um setor">
+        </p-dropdown>
+      </div>
+
+      <div class="no-padding-right col-md-2">
+
+        <button 
+           class="btn btn-primary btn-insert-sector" 
+           (click)="addSector()">
+
+          Inserir
+        </button>
+      </div>
+
+      <div class="col-md-6">
+
+        <table class="table table-bordered">
+
+    <thead>
+
+      <tr>
+
+        <th>Setor</th>
+        <th>Entrada prevista</th>
+        <th>Saída prevista</th>
+        <th>Duração</th>
+      </tr>
+    </thead>
+
+    <tbody>
+
+      <tr *ngFor="let flow of product.flow">
+
+        <td>{{ flow.sector.description }}</td>
+        <td>{{ flow.expectedStart }}</td>
+        <td>{{ flow.expectedEnd }}</td>
+        <td>{{ flow.expectedTime }}</td>
+      </tr>
+    </tbody>
+  </table>
+      </div>
+
+
+    </div>
+    </div>
+  
+
+</div>
+</p-dialog>
+
+  <div class="container">
+
+    <p
+       class="alert alert-success col-md-12" 
+       *ngIf="message && showMessage"> 
+
+    {{ message }}
+    </p>
+    <div style="height: 75px" ></div>
+    <div class="panel panel-primary">
+
+      <div class="panel-heading clearfix">    
+
+        <h4 
+          class="panel-title pull-left">
+          
+          Lista de Produtos
+        </h4>
+
+        <div class="btn-group pull-right">        
+
+          <button 
+            type="button" 
+            pButton 
+            icon="fa-plus" 
+            (click)="add()"></button>
+        </div>
+      </div>
+
+      <div class="panel-body">
+
+        <p-dataTable
+           [value]="products"
+           selectionMode="single"
+           [(selection)]="product"
+           (onRowSelect)="onRowSelect($event)"
+           [stacked]="stacked"
+           [rows]="10"
+           [paginator]="true">
+
+          <p-column field="name" header="Nome"></p-column>
+          <p-column field="category.name" header="Categoria"></p-column>
+          <p-column field="collection.description" header="Coleção"></p-column>
+        </p-dataTable>
+      </div>
+      <div class="col-md-12">
+
+      </div>
+    </div>
+  </div>
+
+  <powered></powered>
+</section>
+
+

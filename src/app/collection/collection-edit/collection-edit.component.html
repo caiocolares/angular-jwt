@@ -1,0 +1,173 @@
+<!-- COMPONENT: collection-edit -->
+<section 
+  class="collection-edit bg section"
+  [ngStyle]="{ 'background-image': 'url(' + login_bg + ')' }">
+
+  <div class="container">
+
+    <a class="btn btn-primary" [routerLink]="['/collection']"> Voltar </a>
+
+    <p 
+      class="alert alert-success col-md-12" 
+      *ngIf="message && showMessage">
+
+      {{ message }}
+    </p>
+
+    <div class="row">
+
+      <span class="item-title col-md-12 text-center"> Coleção </span>
+    </div>
+
+    <form
+      #collectionForm="ngForm"
+      (ngSubmit)="insertItem()" 
+      novalidate>
+
+      <div 
+        *ngIf="code.errors && (code.dirty || code.touched)"
+        class="alert alert-danger">
+
+        <div [hidden]="!code.errors.required">
+        
+          Por favor, preencha o campo código.
+          <i class="fa fa-exclamation" aria-hidden="true"></i>
+        </div>
+
+        <div [hidden]="!code.errors.minlength">
+        
+          O campo código deve conter no mínimo 2 caracteres.
+          <i class="fa fa-exclamation" aria-hidden="true"></i>
+        </div>
+
+        <div [hidden]="!code.errors.pattern">
+        
+          O campo código deve conter somente números.
+          <i class="fa fa-exclamation" aria-hidden="true"></i>
+        </div>
+      </div>
+
+      <div
+        *ngIf="startDate.errors && (startDate.dirty || startDate.touched)"
+        class="alert alert-danger">
+
+        <div [hidden]="!startDate.errors.required">
+
+          Por favor, escolha uma data inicial.
+          <i class="fa fa-exclamation" aria-hidden="true"></i>
+        </div>
+      </div>
+
+      <div
+        *ngIf="endDate.errors && (endDate.dirty || endDate.touched)"
+        class="alert alert-danger">
+
+        <div [hidden]="!endDate.errors.required">
+
+          Por favor, escolha uma data final.
+          <i class="fa fa-exclamation" aria-hidden="true"></i>
+        </div>
+      </div>
+
+      <div
+        *ngIf="limitDemand.errors && (limitDemand.dirty || limitDemand.touched)"
+        class="alert alert-danger">
+
+        <div [hidden]="!limitDemand.errors.required">
+
+          Por favor, escolha o limite da demanda.
+          <i class="fa fa-exclamation" aria-hidden="true"></i>
+        </div>
+      </div>
+
+      <div class="row">
+
+        <div class="form-group col-md-3 no-padding-left">
+
+          <input
+            type="text" 
+            class="form-control" 
+            minlength="3"
+            maxlength="30"
+            [(ngModel)]="collection.code"
+            placeholder="Código"
+            [class.input-error]="code.errors && (code.dirty || code.touched)"
+            required
+            pattern="[0-9]*"
+            name="code"
+            #code="ngModel">
+        </div>
+
+        <div class="form-group col-md-9 no-padding-right">
+
+          <input 
+            type="text" 
+            class="form-control" 
+            [(ngModel)]="collection.description"
+            placeholder="Descrição"
+            required
+            name="description"
+            [class.input-error]="description.errors && (description.dirty || description.touched)"
+            #description="ngModel">
+        </div>
+      </div>
+
+      <div class="date-row row d-flex justify-content-between">
+        
+        <div>
+
+          <label>Data Inicial</label>
+
+          <p-calendar 
+             name="startDate"
+             required
+             dateFormat="dd/mm/yy"
+             #startDate="ngModel"
+             [(ngModel)]="start" 
+             [showIcon]="true">
+          </p-calendar> 
+        </div>
+        
+        <div>
+
+          <label>Data Final</label>
+
+          <p-calendar 
+             name="endDate"
+             required
+             dateFormat="dd/mm/yy"
+             [(ngModel)]="end" 
+             #endDate="ngModel"
+             [showIcon]="true">
+          </p-calendar> 
+        </div>
+        
+        <div>
+
+          <label>Limite da Demanda</label>
+
+          <p-calendar 
+             name="limitDemand"
+             required
+             dateFormat="dd/mm/yy"
+             [(ngModel)]="limit" 
+             #limitDemand="ngModel"
+             [showIcon]="true">
+          </p-calendar> 
+        </div>
+      </div>
+
+      <div class="row">
+
+        <div class="col-md-12">
+
+          <button 
+            class="btn btn-primary btn-collection"
+            [disabled]="!collectionForm.valid"> Salvar </button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <powered></powered>
+</section>

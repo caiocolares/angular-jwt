@@ -1,0 +1,124 @@
+<!-- COMPONENT: category-edit -->
+<section 
+  class="category-edit bg section"
+  [ngStyle]="{ 'background-image': 'url(' + login_bg + ')' }">
+
+  <div class="container">
+
+    <a 
+      class="btn btn-primary" 
+      [class.btn-back]="message"
+      [routerLink]="['/category']"> 
+      
+      Voltar 
+    </a>
+
+    <div class="row">
+
+      <p
+         class="alert alert-success col-md-12" 
+         *ngIf="message">
+
+        {{ message }}
+        <i class="fa fa-check" aria-hidden="true"></i>
+      </p>
+    </div>
+
+    <div class="row">
+
+      <span class="item-title col-md-12 text-center"> Categorias </span>
+    </div>
+
+    <form
+      #categoryForm="ngForm"
+      (ngSubmit)="insertItem()" 
+      novalidate>
+
+      <div 
+        *ngIf="code.errors && (code.dirty || code.touched)"
+        class="alert alert-danger">
+
+        <div [hidden]="!code.errors.required">
+        
+          Por favor, preencha o campo código.
+          <i class="fa fa-exclamation" aria-hidden="true"></i>
+        </div>
+
+        <div [hidden]="!code.errors.minlength">
+        
+          O campo código deve conter no mínimo 2 caracteres.
+          <i class="fa fa-exclamation" aria-hidden="true"></i>
+        </div>
+
+        <div [hidden]="!code.errors.pattern">
+        
+          O campo código deve conter somente números.
+          <i class="fa fa-exclamation" aria-hidden="true"></i>
+        </div>
+      </div>
+
+      <div
+        *ngIf="name.errors && (name.dirty || name.touched)"
+        class="alert alert-danger">
+
+        <div [hidden]="!name.errors.required">
+
+          Por favor, preencha o campo nome.
+          <i class="fa fa-exclamation" aria-hidden="true"></i>
+        </div>
+
+        <div [hidden]="!name.errors.minlength">
+        
+          O campo nome deve conter no mínimo 5 caracters.
+          <i class="fa fa-exclamation" aria-hidden="true"></i>
+        </div>
+      </div>
+
+      <div class="row">
+
+        <div class="form-group col-md-3 no-padding-left">
+
+          <input
+            ngModel
+            type="text" 
+            class="form-control" 
+            [(ngModel)]="category.code"
+            placeholder="Código"
+            name="code"
+            required
+            pattern="[0-9]*"
+            minlength="2"
+            [class.input-error]="code.errors && (code.dirty || code.touched)"
+            #code="ngModel">
+        </div>
+
+        <div class="form-group col-md-7">
+
+          <input 
+            ngModel
+            type="text" 
+            class="form-control" 
+            [(ngModel)]="category.name"
+            placeholder="Nome"
+            required
+            minlength="5"
+            [class.input-error]="name.errors && (name.dirty || name.touched)"
+            name="name"
+            #name="ngModel">
+        </div>
+
+        <div class="form-group col-md-2 no-padding-right">
+
+          <button 
+            class="btn btn-primary btn-block no-margin"
+            [disabled]="!categoryForm.valid"> 
+            
+            Salvar 
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <powered></powered>
+</section>

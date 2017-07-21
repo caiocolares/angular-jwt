@@ -1,0 +1,20 @@
+<!-- COMPONENT: collection-select-custom  -->
+<label>
+
+  Selecione uma coleção
+</label>
+
+<select 
+  class="custom-select col-md-12" 
+  id="collection" 
+  [(ngModel)]="selectedCollectionValue"
+  (ngModelChange)="selectionChanged($event)">
+
+  <option 
+    *ngFor="let collection of collections" 
+    [ngValue]="collection" 
+    [selected]="collection == selectedCollectionValue">
+
+  {{ collection.description  }}
+  </option>
+</select>

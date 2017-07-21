@@ -1,0 +1,100 @@
+<!-- COMPONENT: user -->
+<section 
+  class="user bg section"
+  [ngStyle]="{ 'background-image': 'url(' + loginBg + ')' }">
+
+  <div class="container">
+
+    <p
+       *ngIf="message && showMessage"
+       class="alert alert-success col-md-12">
+
+    {{ message }}
+    <i class="fa fa-check" aria-hidden="true"></i>
+    </p>
+    <div style="height: 75px" ></div>
+    <div class="panel panel-primary">
+
+      <div class="panel-heading clearfix">    
+
+        <h4 class="panel-title pull-left">Usuários</h4>
+
+        <div class="btn-group pull-right">        
+
+          <button 
+            type="button" 
+            pButton icon="fa-plus" 
+            style="float:left" 
+            (click)="add()"></button>
+        </div>
+      </div>
+
+      <div class="panel-body">
+
+        <div class="row">
+
+          <p-dataTable 
+             [value]="users" 
+             selectionMode="single" 
+             [(selection)]="user" 
+             (onRowSelect)="onRowSelect($event)"
+             [rows]="10" 
+             [paginator]="true" 
+             [pageLinks]="3" 
+             [responsive]="true" 
+             [stacked]="stacked">
+
+            <p-column field="name" header="Nome"></p-column>
+            <p-column field="username" header="Username"></p-column>            
+          </p-dataTable>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <p-dialog 
+    header="Categoria (Edição)" 
+    [(visible)]="displayDialog" 
+    [responsive]="true" 
+    showEffect="fade" 
+    [modal]="true">
+
+    <div *ngIf="user">
+
+      <label>Nome</label>
+
+      <input 
+        type="text" 
+        class="form-control" 
+        [(ngModel)]="user.name"
+        placeholder="Nome"
+        name="name"
+        required>
+
+      <label>Nome</label>
+
+      <input 
+         type="text" 
+         class="form-control" 
+         [(ngModel)]="user.username"
+         placeholder="Username"
+         name="username">
+    </div>    
+
+    <p-footer>
+
+      <div class="ui-dialog-buttonpane ui-helper-clearfix">            
+
+        <button 
+          type="button" 
+          pButton icon="fa-check" 
+          (click)="insertItem()" 
+          label="Salvar">
+        </button>
+      </div>
+    </p-footer>
+  </p-dialog>
+
+  <powered></powered>
+</section>

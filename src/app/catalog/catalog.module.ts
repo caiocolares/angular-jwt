@@ -7,10 +7,8 @@ import { CommonModule } from '@angular/common';
 
 import { CalendarModule, DropdownModule } from 'primeng/primeng';
 
-import { CollectionService } from "../services/collection.service";
-import { CollectionComponent } from './collection.component';
-import { CollectionEditComponent } from './collection-edit/collection-edit.component';
-import { CollectionSelectCustomComponent } from './collection-select-custom/collection-select-custom.component';
+import { CatalogService } from "../services/catalog.service";
+import { CatalogComponent } from './catalog.component';
 
 import { FooterPoweredModule } from "../footer-powered/footer-powered.module";
 
@@ -33,20 +31,13 @@ import { DataTableModule, DialogModule, ButtonModule } from 'primeng/primeng';
     ButtonModule
   ],
   declarations: [
-
-    CollectionComponent,
-    CollectionEditComponent,
-    CollectionSelectCustomComponent
+    CatalogComponent
   ],
   exports: [
-
-    CollectionComponent,
-    CollectionEditComponent,
-    CollectionSelectCustomComponent
+    CatalogComponent
   ],
   providers: [
-
-    CollectionService,
+    CatalogService
   ]
 })
 

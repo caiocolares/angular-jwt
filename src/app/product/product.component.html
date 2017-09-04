@@ -13,9 +13,7 @@
            [modal]="true">
 <div class="container">
     <div class="row">
-
-      <div class="col-md-8">
-        <div class="col-md-4">
+        <div class="col-md-3">
         <label>Referência</label>
         <input
            class="form-control" 
@@ -24,7 +22,7 @@
            name="productId" 
            [(ngModel)]="product.id.productId">
         </div>
-        <div class="col-md-8">
+        <div class="col-md-5">
         <label>Nome</label>
         <input 
            class="form-control" 
@@ -34,18 +32,7 @@
            [(ngModel)]="product.name">
         </div>
 
-        <div class="col-md-6">
-           <label>Coleção</label>
-          <p-dropdown 
-           filter="filter"
-           name="collection"
-           [options]="collections"  
-           [style]="{'width':'100%'}" 
-           [(ngModel)]="product.collection" 
-           placeholder="Selecione uma coleção">
-        </p-dropdown>
-        </div>
-        <div class="col-md-6">
+        <div class="col-md-4">
         <label>Categoria</label>
         <p-dropdown 
            filter="filter"
@@ -91,71 +78,16 @@
         </div>
 
       </div>
-      <div class="col-md-4">
-        <img src="{{imageUrlGet}}" style=" max-height: 250px " >
+      
+    <div *ngIf="showFileUploader" class="row">
+        <div class="col-md-12">
+          <p-carousel [value]="product.images">
+              <ng-template let-item let-i="index" pTemplate="item">
+                <img src="{{imageUrlGet}}{{item}}.jpeg" style=" max-height: 200px " >
+              </ng-template>
+          </p-carousel>
       </div>
     </div>
-
-
-    <div 
-           *ngIf="showSectorSelect" 
-           class="row custom-margin-bottom justify-content-between">
-      <div class="row">
-      <div class="col-md-3">
-        <label>Setor</label>
-        <p-dropdown 
-           filter="filter"
-           name="sector"
-           [options]="sectors"  
-           [style]="{'width':'250px'}" 
-           [(ngModel)]="sector" 
-           placeholder="Selecione um setor">
-        </p-dropdown>
-      </div>
-
-      <div class="no-padding-right col-md-2">
-
-        <button 
-           class="btn btn-primary btn-insert-sector" 
-           (click)="addSector()">
-
-          Inserir
-        </button>
-      </div>
-
-      <div class="col-md-6">
-
-        <table class="table table-bordered">
-
-    <thead>
-
-      <tr>
-
-        <th>Setor</th>
-        <th>Entrada prevista</th>
-        <th>Saída prevista</th>
-        <th>Duração</th>
-      </tr>
-    </thead>
-
-    <tbody>
-
-      <tr *ngFor="let flow of product.flow">
-
-        <td>{{ flow.sector.description }}</td>
-        <td>{{ flow.expectedStart }}</td>
-        <td>{{ flow.expectedEnd }}</td>
-        <td>{{ flow.expectedTime }}</td>
-      </tr>
-    </tbody>
-  </table>
-      </div>
-
-
-    </div>
-    </div>
-  
-
 </div>
 </p-dialog>
 
@@ -201,7 +133,6 @@
 
           <p-column field="name" header="Nome"></p-column>
           <p-column field="category.name" header="Categoria"></p-column>
-          <p-column field="collection.description" header="Coleção"></p-column>
         </p-dataTable>
       </div>
       <div class="col-md-12">

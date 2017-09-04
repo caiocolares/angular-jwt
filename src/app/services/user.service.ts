@@ -6,7 +6,7 @@ import { User } from "../models/user.model";
 export class UserService {
 
   token: string;
-  url: string = 'http://31.220.53.50:888/user';
+  url: string = 'http://localhost:8088/user';
   headers: Headers;
   currentUser: any;
 

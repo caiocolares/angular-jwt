@@ -1,19 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 
-import { CollectionService } from "../services/collection.service";
-import { Collection } from "../models/collection.model";
+import { CatalogService } from "../services/catalog.service";
+import { Catalog } from "../models/catalog.model";
 import { Router, ActivatedRoute } from "@angular/router";
 
 @Component({
 
-  selector: 'collection',
-  templateUrl: './collection.component.html',
-  styleUrls: ['./collection.component.sass']
+  selector: 'catalog',
+  templateUrl: './catalog.component.html',
+  styleUrls: ['./catalog.component.sass']
 })
-export class CollectionComponent implements OnInit {
+export class CatalogComponent implements OnInit {
 
-  collection: Collection = new Collection();
-  collections: Array<Collection> = [];
+  collection: Catalog = new Catalog();
+  collections: Array<Catalog> = [];
   showMessage: boolean = false;
   message: string = '';
   login_bg: string = '../../assets/img/admin-bg.jpeg';
@@ -22,7 +22,7 @@ export class CollectionComponent implements OnInit {
 
   add(){
     this.displayDialog = true;
-    this.collection = new Collection();
+    this.collection = new Catalog();
   }
 
   onRowSelect(event){
@@ -33,14 +33,14 @@ export class CollectionComponent implements OnInit {
 
   constructor( 
 
-    private _collectionService: CollectionService,
+    private _catalogService: CatalogService,
     private _router: Router,
     private _route: ActivatedRoute,
   ) { };
 
   ngOnInit() {
 
-   this._collectionService.getItem()
+   this._catalogService.getItem()
        .subscribe(
 
          collections => {this.collections = collections;console.log(collections);},
@@ -48,9 +48,9 @@ export class CollectionComponent implements OnInit {
        );
   }
 
-  insertItem( collection: Collection ) {
+  insertItem( catalog: Catalog ) {
 
-    this._collectionService.insertItem( this.collection )
+    this._catalogService.insertItem( this.collection )
         .subscribe(
           
           res => {
@@ -58,7 +58,7 @@ export class CollectionComponent implements OnInit {
             this.showMessage = true;
             this.message = 'Coleção inserida com sucesso.';
 
-            this._collectionService.getItem()
+            this._catalogService.getItem()
                 .subscribe(
                 
                   collections => this.collections = collections

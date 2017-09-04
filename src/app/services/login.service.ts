@@ -8,7 +8,7 @@ import { Login } from "../models/login.model";
 export class LoginService {
 
   token: string = '';
-  url: string = 'http://31.220.53.50:888/auth';
+  url: string = 'http://localhost:8088/auth';
   headers: Headers;
 
   constructor( private _http: Http ) {

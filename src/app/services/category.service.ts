@@ -9,7 +9,7 @@ import { Category } from "../models/category.model";
 export class CategoryService {
 
   token: string;
-  url: string = 'http://31.220.53.50:888/category';
+  url: string = 'http://localhost:8088/category';
   headers: Headers;
 
   constructor( private _http: Http ) {

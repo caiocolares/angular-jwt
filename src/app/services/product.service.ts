@@ -3,13 +3,12 @@ import { Http, Headers, Response } from '@angular/http';
 import { Observable } from 'rxjs';
 
 import { Product } from '../models/product.model';
-import { Sector } from "../models/sector.model";
 
 @Injectable()
 export class ProductService {
 
   token: string;
-  url: string = 'http://31.220.53.50:888/product';
+  url: string = 'http://localhost:8088/product';
   headers: Headers;
   options: Object;
   currentUser: any;
@@ -52,14 +51,4 @@ export class ProductService {
       .map( () => console.log( 'Categoria inserida com sucesso' ) );
   };
 
-  insertSector( sector: Sector, id ) {
-
-    console.log( sector, id );
-
-    this.headers.set( 'Content-Type', 'application/json' );
-
-    return this.http
-      .post( this.url + '/' + id + '/sector', JSON.stringify( sector ), { headers: this.headers } )
-      .map( res => res.json() );
-  };
 }

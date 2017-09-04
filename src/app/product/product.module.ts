@@ -10,17 +10,13 @@ import {
   DropdownModule,
   DataTableModule,
   DialogModule,
-  ButtonModule
+  ButtonModule,
+  CarouselModule
 } from 'primeng/primeng';
 
 import { ProductService } from "../services/product.service";
 import { ProductComponent } from './product.component';
-
-import { CollectionModule } from "../collection/collection.module";
-
 import { CategoryModule } from "../category/category.module";
-
-import { SectorModule } from "../sector/sector.module";
 
 import { FooterPoweredModule } from "../footer-powered/footer-powered.module";
 
@@ -32,15 +28,14 @@ import { FooterPoweredModule } from "../footer-powered/footer-powered.module";
     BrowserModule,
     RouterModule,
     FormsModule,
-    CollectionModule,
     CategoryModule,
-    SectorModule,
 
     FileUploadModule,
     DropdownModule,
     DataTableModule,
     DialogModule,
     ButtonModule,
+    CarouselModule,
 
     FooterPoweredModule
   ],

@@ -1,5 +1,5 @@
 import { Category } from '../models/category.model';
-import { Collection } from '../models/collection.model';
+import { Catalog } from '../models/catalog.model';
 import { ProductId } from '../models/productId.model';
 
 export class Product {
@@ -10,5 +10,6 @@ export class Product {
   description: string;
   detail: string;
   category: Category = new Category();
-  collection: Collection = new Collection();
+  catalog: Catalog = new Catalog();
+  images = [];
 }

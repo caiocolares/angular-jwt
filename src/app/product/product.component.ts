@@ -6,12 +6,7 @@ import { Product } from "../models/product.model";
 import { SelectItem } from 'primeng/primeng';
 
 import { CategoryService } from "../services/category.service";
-import { SectorService } from "../services/sector.service";
-
-import { CollectionService } from "../services/collection.service";
-import { Collection } from "../models/collection.model";
 import { Category } from "../models/category.model";
-import { Sector } from "../models/sector.model";
 
 @Component({
 
@@ -25,7 +20,6 @@ export class ProductComponent implements OnInit {
   showSectorSelect: boolean = false;
   showFileUploader: boolean = false;
   categories: SelectItem[] = [];
-  collections: SelectItem[] = [];
   displayDialog: boolean = false;
   product: Product = new Product();
   products: Array<Product> = [];
@@ -33,34 +27,19 @@ export class ProductComponent implements OnInit {
   token: string = '';
   imageUrlGet: string = '';
   imageUrlPost: string = '';
-  sectors : SelectItem[] = [];
-  sector : Sector;
+  
 
-  constructor( 
-    
-    private _productService: ProductService,
-    private _categoryService: CategoryService,
-    private _collectionService: CollectionService,
-    private _sectorService : SectorService
-  ) { }
+  constructor( private _productService: ProductService,
+                private _categoryService: CategoryService) { }
 
   ngOnInit() { 
   
     this._listItems();
 
-
-    this._sectorService.getItem()
-      .subscribe(
-        sectors => this.fillSectors( sectors ) );
-
     this._categoryService.getItem()
       .subscribe(
         categories => this.fillCategories( categories ) );
 
-    this._collectionService.getItem()
-      .subscribe(
-
-        collections => this.fillCollections( collections) );
   };
 
   fillCategories(list : Array<Category>) {
@@ -68,19 +47,6 @@ export class ProductComponent implements OnInit {
     this.categories = [];
     list.forEach( e => this.categories.push({label: e.name, value : e}) );
   };
-
-  fillCollections( list: Array<Collection>) {
-
-    this.collections = [];
-    list.forEach( e => this.collections.push({label: e.description, value : e}) );
-  };
-
-  fillSectors( list: Array<Collection>) {
-
-    this.sectors = [];
-    list.forEach( e => this.sectors.push({label: e.description, value : e}) );
-  };
-
 
   add() {
     this.imageUrlGet = 'https://www.sistemaintegrado.com.br/si/cdn/img/0/0/crop/60/default.jpg';
@@ -93,11 +59,14 @@ export class ProductComponent implements OnInit {
   onRowSelect( event ) {
 
     this.product = event.data;
+    if(this.product == undefined){
+      this.product.images = [];
+    }
     this.displayDialog = true;
     this.showSectorSelect = true;
     this.showFileUploader = true;
-    this.imageUrlGet = 'http://31.220.53.50:888/image/' + this.product.id.enterpriseId + '/' + this.product.id.productId;
-    this.imageUrlPost = 'http://31.220.53.50:888/product/' + this.product.id.productId + '/image';
+    this.imageUrlGet = 'http://localhost:8088/image/' + this.product.id.enterpriseId + '/';
+    this.imageUrlPost = 'http://localhost:8088/product/' + this.product.id.productId + '/image/add';
   };
 
   private onBeforeSend( event ) { 
@@ -130,14 +99,6 @@ export class ProductComponent implements OnInit {
         erro => console.log( erro )
       )
   };
-  addSector() {
 
-    this._productService.insertSector( this.sector, this.product.id.productId )
-      .subscribe(
-
-        product => this.product = product,
-        error => console.log( error )
-      )
-  }
 
 }

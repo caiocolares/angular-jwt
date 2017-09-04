@@ -19,7 +19,7 @@
      <div class="panel panel-primary">
 
       <div class="panel-heading clearfix">    
-        <h4 class="panel-title pull-left" style="padding-top: 7.5px;">Coleções</h4>
+        <h4 class="panel-title pull-left" style="padding-top: 7.5px;">Catálogos</h4>
         <div class="btn-group pull-right">        
           <button type="button" pButton icon="fa-plus" style="float:left" (click)="add()"></button>
         </div>
@@ -42,7 +42,8 @@
 
             <p-column field="code" header="Código"></p-column>
             <p-column field="description" header="Descrição"></p-column>       
-            <p-column field="startDate" header="Início"></p-column>            
+            <p-column field="startDate" header="Início"></p-column>     
+            <p-column field="endDate" header="Fim"></p-column>            
           </p-dataTable>
         </div>
 
@@ -55,7 +56,7 @@
 
 
     <p-dialog 
-       header="Coleção (Edição)" 
+       header="Catálogo (Edição)" 
        [(visible)]="displayDialog" 
        [responsive]="true" 
        [width]="380" showEffect="fade" 
@@ -105,24 +106,11 @@
           </p-calendar> 
         </div>
         
-        <div>
-
-          <label>Limite da Demanda</label>
-
-          <p-calendar 
-             name="limitDemand"
-             required
-             dateFormat="dd/mm/yy"
-             [(ngModel)]="collection.limitDemand" 
-             [showIcon]="true">
-          </p-calendar> 
-
-      </div>
-          <p-footer>
-        <div class="ui-dialog-buttonpane ui-helper-clearfix">            
-          <button type="button" pButton icon="fa-check" (click)="insertItem()" label="Salvar"></button>
-        </div>
-      </p-footer>
+        <p-footer>
+          <div class="ui-dialog-buttonpane ui-helper-clearfix">            
+            <button type="button" pButton icon="fa-check" (click)="insertItem()" label="Salvar"></button>
+          </div>
+        </p-footer>
     </p-dialog>
 
 

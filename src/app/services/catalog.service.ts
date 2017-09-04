@@ -3,13 +3,13 @@ import { Http, Headers, Response } from '@angular/http';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
  
-import { Collection } from '../models/collection.model';
+import { Catalog } from '../models/catalog.model';
  
 @Injectable()
-export class CollectionService {
+export class CatalogService {
  
   token: string;
-  url: string = 'http://31.220.53.50:888/collection';
+  url: string = 'http://localhost:8088/catalog';
   headers: Headers;
  
   constructor( private _http: Http ) {
@@ -37,12 +37,12 @@ export class CollectionService {
                .map( (response: Response) => response.json() )
  }
  
-  insertItem( collection: Collection ) {
+  insertItem( catalog: Catalog ) {
  
     this.headers.set( 'Content-type', 'application/json');
  
     return this._http
-               .post( this.url, JSON.stringify( collection ), { headers: this.headers } )
+               .post( this.url, JSON.stringify( catalog ), { headers: this.headers } )
                .map( () => {
  
                   console.log( 'Coleção inserida com sucesso.' )

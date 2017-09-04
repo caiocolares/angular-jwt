@@ -12,7 +12,8 @@ import {
   ButtonModule, 
   CalendarModule,
   InputTextModule,
-  DropdownModule
+  DropdownModule,
+  CarouselModule
 } from 'primeng/primeng';
 
 import { LoginModule } from "./login/login.module";
@@ -21,17 +22,11 @@ import { HomeComponent } from './home/home.component';
 
 import { CategoryModule } from "./category/category.module";
 
-import { CollectionModule } from "./collection/collection.module";
+import { CollectionModule } from "./catalog/catalog.module";
 
 import { EnterpriseComponent } from './enterprise/enterprise.component';
 
-import { DemandModule } from "./demand/demand.module";
-
-import { FlagModule } from "./flag/flag.module";
-
 import { ProductModule } from "./product/product.module";
-
-import { SectorModule } from "./sector/sector.module";
 
 import { UserModule } from "./user/user.module";
 
@@ -51,6 +46,7 @@ import { FooterPoweredModule } from "./footer-powered/footer-powered.module";
     BrowserAnimationsModule,
     FormsModule,
     DropdownModule,
+    CarouselModule,
 
     routing,
 
@@ -63,15 +59,7 @@ import { FooterPoweredModule } from "./footer-powered/footer-powered.module";
     CategoryModule,
 
     CollectionModule,
-
-    DemandModule,
-
-    FlagModule,
-
     ProductModule,
-
-    SectorModule,
-
     UserModule,
 
     FooterPoweredModule

@@ -4,12 +4,13 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 
 import { Category } from "../models/category.model";
+import { Properties } from '../models/properties';
 
 @Injectable()
 export class CategoryService {
 
   token: string;
-  url: string = 'http://localhost:8088/category';
+  url: string = 'https://rest.lojaturbinada.com.br/catalogo/category';
   headers: Headers;
 
   constructor( private _http: Http ) {
@@ -21,6 +22,9 @@ export class CategoryService {
     this.headers = new Headers();
     this.headers.append( 'Accept', 'application/json' );
     this.headers.append( 'Authorization', this.token );
+
+    let properties = new Properties();
+    this.url = properties.path+'/category';
   }
 
   getItem() {

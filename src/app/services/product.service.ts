@@ -3,12 +3,13 @@ import { Http, Headers, Response } from '@angular/http';
 import { Observable } from 'rxjs';
 
 import { Product } from '../models/product.model';
+import { Properties } from '../models/properties';
 
 @Injectable()
 export class ProductService {
 
   token: string;
-  url: string = 'http://localhost:8088/product';
+  url: string = 'https://rest.lojaturbinada.com.br/catalogo/product';
   headers: Headers;
   options: Object;
   currentUser: any;
@@ -22,6 +23,9 @@ export class ProductService {
     this.headers = new Headers();
     this.headers.append( 'Accept', 'application/json' );
     this.headers.append( 'Authorization', this.token );
+
+    let properties = new Properties();
+    this.url = properties.path+'/product';
   };
 
   getItem() {

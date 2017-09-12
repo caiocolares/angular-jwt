@@ -43,7 +43,7 @@
            placeholder="Selecione uma categoria">
         </p-dropdown>
         </div>
-        <div class="col-md-8">
+        <div class="col-md-6">
         <label>Descrição</label>
         <input 
            class="form-control" 
@@ -52,7 +52,10 @@
            name="description"
            [(ngModel)]="product.description">
         </div>
-      <div class="col-md-4">
+      <div class="col-md-3">
+          <p-listbox [options]="catalogs" [(ngModel)]="product.catalogs" multiple="multiple" checkbox="checkbox" filter="filter"></p-listbox>          
+      </div>
+      <div class="col-md-3">
            <div *ngIf="showFileUploader" class="row custom-margin-bottom">
         <label>Imagem</label>
         <p-fileUpload 

@@ -43,7 +43,17 @@
             <p-column field="code" header="Código"></p-column>
             <p-column field="description" header="Descrição"></p-column>       
             <p-column field="startDate" header="Início"></p-column>     
-            <p-column field="endDate" header="Fim"></p-column>            
+            <p-column field="endDate" header="Fim"></p-column>      
+            <p-column>
+                <ng-template let-cat="rowData" pTemplate="body">
+                  <button type="button" (click)="imageCatalog(cat)" pButton icon="fa-picture-o" label="Imagem Capa" ></button>
+                </ng-template>
+            </p-column>
+            <p-column>
+                <ng-template let-cat="rowData" pTemplate="body">
+                  <button type="button" (click)="publishCatalog(cat)" pButton icon="fa-share-alt" label="Publicar" ></button>
+                </ng-template>
+            </p-column>      
           </p-dataTable>
         </div>
 
@@ -53,6 +63,27 @@
 
     
   </div>
+
+  <p-dialog 
+      header="Catálogo (Capa)" 
+      [(visible)]="displayImage" 
+      [responsive]="true" 
+      [width]="380" showEffect="fade" 
+      [modal]="true">
+ 
+    <div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="displayImage">
+
+
+      <p-fileUpload 
+          name="file" 
+          (onBeforeSend)="onBeforeSend($event)"
+          url="{{urlImageCatalog}}" 
+          (onError)="onError"
+          auto="auto" accept="image/*">
+        </p-fileUpload>
+
+      </div>
+  </p-dialog>
 
 
     <p-dialog 
@@ -74,6 +105,17 @@
             placeholder="Código"            
             required
             pattern="[0-9]*">
+
+
+            <label>Nome</label>
+            
+                      <input 
+                        type="text" 
+                        class="form-control" 
+                        [(ngModel)]="collection.name"
+                        placeholder="Nome"
+                        required
+                        name="name">            
 
           <label>Descrição</label>
 

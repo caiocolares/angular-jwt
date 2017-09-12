@@ -1,3 +1,299 @@
-<p>
-  enterprise works!
-</p>
+<!-- COMPONENT: collection -->
+<section 
+class="collection bg section"
+[ngStyle]="{ 'background-image': 'url(' + login_bg + ')' }">
+
+
+
+<div class="container">
+  <div style="height: 75px" ></div>
+
+  <p
+     *ngIf="message && showMessage"
+     class="alert alert-success col-md-12">
+
+  {{ message }}
+  <i class="fa fa-check" aria-hidden="true"></i>
+  </p>
+
+   <div class="panel panel-primary">
+
+    <div class="panel-heading clearfix">    
+      <h4 class="panel-title pull-left" style="padding-top: 7.5px;">Empresas</h4>
+      <div class="btn-group pull-right">        
+        <button type="button" pButton icon="fa-plus" style="float:left" (click)="add()"></button>
+      </div>
+    </div>
+
+    <div class="panel-body">
+
+      <div class="row">
+
+        <p-dataTable 
+           [value]="enterprises" 
+           selectionMode="single" 
+           [(selection)]="enterprise" 
+           (onRowSelect)="onRowSelect($event)"
+           [rows]="10" 
+           [paginator]="true" 
+           [pageLinks]="3" 
+           [responsive]="true" 
+           [stacked]="stacked">
+
+          <p-column field="id" header="Id"></p-column>
+          <p-column field="name" header="Nome"></p-column>       
+          <p-column field="fantasy" header="Fantasia"></p-column>     
+          <p-column field="cnpj" header="CNPJ"></p-column>      
+          <p-column field="email" header="Email"></p-column>      
+          <p-column>
+              <ng-template let-enterprise="rowData" pTemplate="body">
+                <button type="button" (click)="manageShop(enterprise)" pButton icon="fa-shopping-cart" ></button>
+              </ng-template>
+          </p-column>      
+          <p-column>
+            <ng-template let-enterprise="rowData" pTemplate="body">
+              <button type="button" (click)="manageNews(enterprise)" pButton icon="fa-newspaper-o" ></button>
+            </ng-template>
+        </p-column>      
+        </p-dataTable>
+      </div>
+
+    </div>
+
+  </div>
+
+  
+</div>
+
+<p-dialog 
+      header="Novidades" 
+      [(visible)]="displayNews" 
+      [responsive]="true" 
+      [width]="500" showEffect="fade" 
+      [positionTop]="5"
+      [modal]="true">
+
+      <div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="displayNews">
+
+        <div class="ui-g">
+          <div class="ui-g-5">
+            <p-fileUpload 
+                name="file" 
+                (onBeforeSend)="onBeforeSend($event)"
+                url="{{urlPostNews}}" 
+                (onError)="onError"
+                auto="auto" accept="image/*">
+            </p-fileUpload>
+
+            <p-dataTable 
+                    [value]="enterprise.news" 
+                    selectionMode="single" 
+                    [(selection)]="news" 
+                    (onRowSelect)="editNews($event)"
+                    [rows]="10" 
+                    [paginator]="true" 
+                    [pageLinks]="3" 
+                    [responsive]="true" 
+                    [stacked]="stacked">
+                    <p-column field="description" header="Novidade"></p-column>
+            </p-dataTable>
+
+          </div>
+
+          <div class="ui-g-7">
+
+
+              <label>Descrição</label>          
+              <input type="text" 
+                    class="form-control" 
+                    [(ngModel)]="news.description"
+                    placeholder="Descrição"
+                    required
+                    name="description">
+              <label>URL</label>          
+              <input type="text" 
+                    class="form-control" 
+                    [(ngModel)]="news.url"
+                    placeholder="URL"
+                    required
+                    name="url">
+              <label>Situação</label>
+              <p-checkbox [(ngModel)]="news.active" label="Ativo" binary="true"></p-checkbox>
+          </div>
+
+        </div>
+      </div>
+      <p-footer>
+          <div class="ui-dialog-buttonpane ui-helper-clearfix">            
+            <button type="button" pButton icon="fa-check" (click)="changeNews()" label="Salvar"></button>
+          </div>
+        </p-footer>
+</p-dialog>
+
+
+<p-dialog 
+  header="Lojas" 
+  [(visible)]="displayShop" 
+  [responsive]="true" 
+  [width]="780" showEffect="fade" 
+  [positionTop]="5"
+  [modal]="true">
+
+  <div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="displayShop">
+
+      <div class="ui-g">
+
+          <div class="ui-g-5">
+              <button type="button" (click)="addShop()" pButton  icon="fa-shopping-plus" label="Adicionar Loja"></button>
+              <p-dataTable 
+                      [value]="enterprise.shops" 
+                      selectionMode="single" 
+                      [(selection)]="shop" 
+                      (onRowSelect)="editShop($event)"
+                      [rows]="10" 
+                      [paginator]="true" 
+                      [pageLinks]="3" 
+                      [responsive]="true" 
+                      [stacked]="stacked">
+                      <p-column field="name" header="Loja"></p-column>
+              </p-dataTable>
+
+            
+          </div>
+          <div class="ui-g-7">
+
+            <label>Nome</label>          
+            <input type="text" 
+                  class="form-control" 
+                  [(ngModel)]="shop.name"
+                  placeholder="Nome"
+                  required
+                  name="name"> 
+            
+            <label>Endereço</label>          
+            <input type="text" 
+                  class="form-control" 
+                  [(ngModel)]="shop.address"
+                  placeholder="Endereço"
+                  required
+                  name="address"> 
+
+            <label>Telefone</label>          
+            <input type="text" 
+                  class="form-control" 
+                  [(ngModel)]="shop.phone"
+                  placeholder="Telefone"
+                  required
+                  name="phone"> 
+            
+            <agm-map [zoom]="zoom" (mapClick)="mapClicked($event)" [latitude]="shop.latitude" [longitude]="shop.longitude">
+              <agm-marker [latitude]="shop.latitude" [longitude]="shop.longitude"></agm-marker>
+            </agm-map>
+          </div>
+      </div>
+      
+  </div>
+
+  <p-footer>
+      <div class="ui-dialog-buttonpane ui-helper-clearfix">            
+        <button type="button" pButton icon="fa-check" (click)="saveShop()" label="Salvar"></button>
+      </div>
+    </p-footer>
+
+</p-dialog>
+
+
+  <p-dialog 
+     header="Empresa (Edição)" 
+     [(visible)]="displayDialog" 
+     [responsive]="true" 
+     [width]="380" showEffect="fade" 
+     [modal]="true">
+    
+    <div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="enterprise">
+
+      <label>Nome</label>          
+      <input type="text" 
+            class="form-control" 
+            [(ngModel)]="enterprise.name"
+            placeholder="Nome"
+            required
+            name="name">            
+
+      <label>Fantasia</label>
+      <input type="text" 
+          class="form-control" 
+          [(ngModel)]="enterprise.fantasy"
+          placeholder="Nome Fantasia"
+          required
+          name="fantasy">
+
+      <label>URL</label>
+      <input type="text" 
+              class="form-control" 
+              [(ngModel)]="enterprise.url"
+              placeholder="URL"
+              required
+              name="url">
+
+      <label>Email</label>
+      <input type="text" 
+          class="form-control" 
+          [(ngModel)]="enterprise.email"
+          placeholder="Email"
+          required
+          name="email">
+        
+      <label>Telefone</label>
+      <input type="text" 
+          class="form-control" 
+          [(ngModel)]="enterprise.phone"
+          placeholder="Telefone"
+          required
+          name="phone">
+          
+      <label>Facebook</label>
+      <input type="text" 
+          class="form-control" 
+          [(ngModel)]="enterprise.facebook"
+          placeholder="Facebook"
+          required
+          name="facebook">
+
+      <label>Instagram</label>
+      <input type="text" 
+          class="form-control" 
+          [(ngModel)]="enterprise.instagram"
+          placeholder="Instagram"
+          required
+          name="instagram">
+
+      <label>Twitter</label>
+      <input type="text" 
+          class="form-control" 
+          [(ngModel)]="enterprise.twitter"
+          placeholder="Twitter"
+          required
+          name="twitter">
+
+      <label>Pinterest</label>
+      <input type="text" 
+          class="form-control" 
+          [(ngModel)]="enterprise.pinterest"
+          placeholder="Pinterest"
+          required
+          name="pinterest">
+
+      </div>
+      
+      <p-footer>
+        <div class="ui-dialog-buttonpane ui-helper-clearfix">            
+          <button type="button" pButton icon="fa-check" (click)="insertItem()" label="Salvar"></button>
+        </div>
+      </p-footer>
+  </p-dialog>
+
+
+
+<powered></powered>
+</section>

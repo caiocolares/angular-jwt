@@ -7,13 +7,17 @@ import { routing } from './app.routes';
 
 import { AppComponent } from './app.component';
 
-import { 
+import { AgmCoreModule } from '@agm/core';
 
+import { 
+  FileUploadModule, 
   ButtonModule, 
   CalendarModule,
   InputTextModule,
   DropdownModule,
-  CarouselModule
+  CarouselModule,
+  CheckboxModule,
+  DataTableModule, DialogModule
 } from 'primeng/primeng';
 
 import { LoginModule } from "./login/login.module";
@@ -31,6 +35,9 @@ import { ProductModule } from "./product/product.module";
 import { UserModule } from "./user/user.module";
 
 import { FooterPoweredModule } from "./footer-powered/footer-powered.module";
+import { PublishComponent } from './publish/publish.component';
+
+import { EnterpriseService } from './services/enterprise.service';
 
 @NgModule({
 
@@ -38,7 +45,8 @@ import { FooterPoweredModule } from "./footer-powered/footer-powered.module";
 
     AppComponent,
     HomeComponent,
-    EnterpriseComponent
+    EnterpriseComponent,
+    PublishComponent
   ],
   imports: [
 
@@ -47,9 +55,11 @@ import { FooterPoweredModule } from "./footer-powered/footer-powered.module";
     FormsModule,
     DropdownModule,
     CarouselModule,
-
+    DataTableModule, DialogModule,
+    CheckboxModule,
     routing,
 
+    FileUploadModule, 
     ButtonModule,
     CalendarModule,
     InputTextModule,
@@ -62,9 +72,13 @@ import { FooterPoweredModule } from "./footer-powered/footer-powered.module";
     ProductModule,
     UserModule,
 
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyBJ1yCvLzaurAmfLBb9EcSEp2TyzxAog3M'
+    }),
+
     FooterPoweredModule
   ],
-  providers: [],
+  providers: [EnterpriseService],
   bootstrap: [
     
     AppComponent

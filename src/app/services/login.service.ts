@@ -3,12 +3,13 @@ import { Http, Headers, Response } from '@angular/http';
 import 'rxjs/add/operator/map';
 
 import { Login } from "../models/login.model";
+import { Properties } from '../models/properties';
 
 @Injectable()
 export class LoginService {
 
   token: string = '';
-  url: string = 'http://localhost:8088/auth';
+  url: string = 'https://rest.lojaturbinada.com.br/catalogo/auth';
   headers: Headers;
 
   constructor( private _http: Http ) {
@@ -21,6 +22,9 @@ export class LoginService {
       'Accept': 'application/json'
     } );
     this.token = currentUser && currentUser.token;
+
+    let properties = new Properties();
+    this.url = properties.path+'/auth';
   }
 
   login( user: Login ) {

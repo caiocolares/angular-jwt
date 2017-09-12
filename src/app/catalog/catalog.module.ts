@@ -12,12 +12,13 @@ import { CatalogComponent } from './catalog.component';
 
 import { FooterPoweredModule } from "../footer-powered/footer-powered.module";
 
-import { DataTableModule, DialogModule, ButtonModule } from 'primeng/primeng';
+import { FileUploadModule, DataTableModule, DialogModule, ButtonModule } from 'primeng/primeng';
 
 @NgModule({
 
   imports: [
 
+    FileUploadModule,
     CommonModule,
     BrowserModule,
     FormsModule,

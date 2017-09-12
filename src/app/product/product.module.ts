@@ -11,7 +11,8 @@ import {
   DataTableModule,
   DialogModule,
   ButtonModule,
-  CarouselModule
+  CarouselModule,
+  ListboxModule
 } from 'primeng/primeng';
 
 import { ProductService } from "../services/product.service";
@@ -36,6 +37,7 @@ import { FooterPoweredModule } from "../footer-powered/footer-powered.module";
     DialogModule,
     ButtonModule,
     CarouselModule,
+    ListboxModule,
 
     FooterPoweredModule
   ],

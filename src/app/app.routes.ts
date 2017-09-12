@@ -12,10 +12,13 @@ import { CatalogComponent } from "./catalog/catalog.component";
 import { ProductComponent } from "./product/product.component";
 import { UserComponent } from "./user/user.component";
 
+import { PublishComponent} from './publish/publish.component';
+
+import { EnterpriseComponent } from './enterprise/enterprise.component';
+
 const appRoutes: Routes = [
 
   {
-
     path: 'login',
     component: LoginComponent
   },
@@ -50,11 +53,22 @@ const appRoutes: Routes = [
     canActivate: [ LoginGuard ]
   },
   {
+    path: 'enterprise',
+    component: EnterpriseComponent,
+    canActivate: [ LoginGuard ]
+  },
+  {
 
     path: 'user',
     component: UserComponent,
     canActivate: [ LoginGuard ]
   },
+  {
+    
+        path: 'publish',
+        component: PublishComponent,
+        canActivate: [ LoginGuard ]
+      },
   {
 
     path: '**',

@@ -8,6 +8,11 @@ import { SelectItem } from 'primeng/primeng';
 import { CategoryService } from "../services/category.service";
 import { Category } from "../models/category.model";
 
+import { Catalog } from '../models/catalog.model';
+import { CatalogService } from '../services/catalog.service';
+
+import { Properties } from '../models/properties';
+
 @Component({
 
   selector: 'app-product',
@@ -27,9 +32,14 @@ export class ProductComponent implements OnInit {
   token: string = '';
   imageUrlGet: string = '';
   imageUrlPost: string = '';
+
+  catalogs : SelectItem[] = [];
+
+  properties = new Properties();
   
 
   constructor( private _productService: ProductService,
+                private _catalogService : CatalogService,
                 private _categoryService: CategoryService) { }
 
   ngOnInit() { 
@@ -37,13 +47,20 @@ export class ProductComponent implements OnInit {
     this._listItems();
 
     this._categoryService.getItem()
-      .subscribe(
-        categories => this.fillCategories( categories ) );
+        .subscribe(categories => this.fillCategories( categories ) );
+
+    this._catalogService.getItem()
+        .subscribe( catalogs => this.fillCatalogs(catalogs));
 
   };
 
-  fillCategories(list : Array<Category>) {
+  fillCatalogs( list : Array<Catalog>){
+    this.catalogs = [];
+    console.log(list);
+    list.forEach( e => this.catalogs.push({label: e.name, value : e}) );
+  }
 
+  fillCategories(list : Array<Category>) {
     this.categories = [];
     list.forEach( e => this.categories.push({label: e.name, value : e}) );
   };
@@ -65,8 +82,8 @@ export class ProductComponent implements OnInit {
     this.displayDialog = true;
     this.showSectorSelect = true;
     this.showFileUploader = true;
-    this.imageUrlGet = 'http://localhost:8088/image/' + this.product.id.enterpriseId + '/';
-    this.imageUrlPost = 'http://localhost:8088/product/' + this.product.id.productId + '/image/add';
+    this.imageUrlGet = this.properties.path+'/image/' + this.product.id.enterpriseId + '/';
+    this.imageUrlPost = this.properties.path+'/product/' + this.product.id.productId + '/image/add';
   };
 
   private onBeforeSend( event ) { 

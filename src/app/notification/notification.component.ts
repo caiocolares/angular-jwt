@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
-import {Notification} from '../models/notification.model';
+import { Notification} from '../models/notification.model';
+import { NotificationService } from '../services/notification.service';
 
 @Component({
   selector: 'app-notification',
@@ -18,9 +19,12 @@ export class NotificationComponent implements OnInit {
 
   displayDialog : boolean = false;
 
-  constructor() { }
+  constructor(private service : NotificationService) { }
 
   ngOnInit() {
+    this.service.list()
+      .subscribe(list => this.notifications = list);
+
   }
 
   add(){
@@ -29,7 +33,14 @@ export class NotificationComponent implements OnInit {
   }
 
   sendNotification(){
-    this.displayDialog = false;
+
+    this.service.sendNotification(this.notification)
+            .subscribe(resp => {console.log(resp);
+                                alert('Mensagem enviada com sucesso!')
+                                this.displayDialog = false;},
+                        error=> {alert('Falha ao enviar a mensagem!'); 
+                                this.displayDialog = false;
+                                console.log(error);})
 
   }
 

@@ -27,6 +27,14 @@ export class NotificationService {
     this.url = properties.path+'/notification';
   }
 
+  list(){
+    this.headers.set( 'Content-type', 'application/json');
+    
+    return this._http
+               .get( this.url, { headers: this.headers } )
+               .map( ( response: Response ) => response.json() );
+  }
+
   sendNotification( notification : Notification ) {
 
     this.headers.set( 'Content-type', 'application/json');

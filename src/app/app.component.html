@@ -29,7 +29,7 @@
         <span class="icon-bar"></span>
       </button>
 
-      <a class="navbar-brand" href="#"> Catálogo Virtual</a>
+      <a class="navbar-brand" href="#"> Loja Turbinada</a>
     </div>
 
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -55,7 +55,7 @@
           <ul class="dropdown-menu">
             <li> <a [routerLink]="['/category']">Categorias</a> </li>  
             <li> <a [routerLink]="['/catalog']">Catálogo</a> </li>   
-            <li> <a [routerLink]="['/variations']">Variações</a> </li>             
+            <li> <a [routerLink]="['/specification']">Especificações</a> </li>             
             <li role="separator" class="divider"></li>          
             <li> <a [routerLink]="['/product']"> Produtos </a> </li>
           </ul>
@@ -75,20 +75,14 @@
             <span class="caret"></span>
           </a>
 
-          <ul class="dropdown-menu">            
-            <li>
-              
-              <a onclick="javascript:alert('em desenvolvimento')">Publicação</a>
-            </li>
-
-            <li> <a onclick="javascript:alert('em desenvolvimento')">Aprovação</a> </li>
+          <ul class="dropdown-menu">                                      
+            <li> <a [routerLink]="['/publish']">Publicação</a></li>
           </ul>
         </li>
         <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Consultas <span class="caret"></span></a>
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Utilitários <span class="caret"></span></a>
           <ul class="dropdown-menu">
-            <li><a onclick="javascript:alert('em desenvolvimento')">Clientes</a></li>
-            <li><a onclick="javascript:alert('em desenvolvimento')">Enviar Notificação aos Dispositivos</a></li>
+              <li> <a [routerLink]="['/notification']">Enviar Notificação aos Dispositivos</a></li>
           </ul>
         </li>
         <li class="dropdown">

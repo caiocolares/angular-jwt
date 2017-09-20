@@ -3,6 +3,7 @@ import { Http, Headers, Response } from '@angular/http';
 import { Observable } from 'rxjs';
 
 import { Product } from '../models/product.model';
+import { Feature } from '../models/feature';
 import { Properties } from '../models/properties';
 
 @Injectable()
@@ -54,5 +55,15 @@ export class ProductService {
       .post( this.url, JSON.stringify( product ), { headers: this.headers } )
       .map( () => console.log( 'Categoria inserida com sucesso' ) );
   };
+
+  addFeature( product : Product,  feature : Feature){
+    console.log(product);
+    this.headers.set( 'Content-Type', 'application/json' );
+    let url = this.url+'/'+product.id.productId+'/addfeature';
+    return this.http.post(url,JSON.stringify(feature),{headers : this.headers})
+                    .map( res => res.json());
+
+  }
+
 
 }

@@ -17,7 +17,10 @@ import {
   DropdownModule,
   CarouselModule,
   CheckboxModule,
-  DataTableModule, DialogModule
+  DataTableModule, 
+  DialogModule,
+  ChipsModule,
+  PickListModule
 } from 'primeng/primeng';
 
 import { LoginModule } from "./login/login.module";
@@ -38,7 +41,11 @@ import { FooterPoweredModule } from "./footer-powered/footer-powered.module";
 import { PublishComponent } from './publish/publish.component';
 
 import { EnterpriseService } from './services/enterprise.service';
+import { SpecificationComponent } from './specification/specification.component';
 
+import { SpecificationService } from './services/specification.service';
+import { NotificationComponent } from './notification/notification.component';
+import { NotificationService } from './services/notification.service';
 @NgModule({
 
   declarations: [
@@ -46,7 +53,9 @@ import { EnterpriseService } from './services/enterprise.service';
     AppComponent,
     HomeComponent,
     EnterpriseComponent,
-    PublishComponent
+    PublishComponent,
+    SpecificationComponent,
+    NotificationComponent
   ],
   imports: [
 
@@ -57,6 +66,8 @@ import { EnterpriseService } from './services/enterprise.service';
     CarouselModule,
     DataTableModule, DialogModule,
     CheckboxModule,
+    ChipsModule,
+    PickListModule,
     routing,
 
     FileUploadModule, 
@@ -78,7 +89,7 @@ import { EnterpriseService } from './services/enterprise.service';
 
     FooterPoweredModule
   ],
-  providers: [EnterpriseService],
+  providers: [EnterpriseService, SpecificationService, NotificationService ],
   bootstrap: [
     
     AppComponent

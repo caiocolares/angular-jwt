@@ -15,6 +15,8 @@ import { UserComponent } from "./user/user.component";
 import { PublishComponent} from './publish/publish.component';
 
 import { EnterpriseComponent } from './enterprise/enterprise.component';
+import { SpecificationComponent } from './specification/specification.component';
+import { NotificationComponent } from './notification/notification.component';
 
 const appRoutes: Routes = [
 
@@ -53,6 +55,12 @@ const appRoutes: Routes = [
     canActivate: [ LoginGuard ]
   },
   {
+    
+        path: 'specification',
+        component: SpecificationComponent,
+        canActivate: [ LoginGuard ]
+      },
+  {
     path: 'enterprise',
     component: EnterpriseComponent,
     canActivate: [ LoginGuard ]
@@ -69,6 +77,12 @@ const appRoutes: Routes = [
         component: PublishComponent,
         canActivate: [ LoginGuard ]
       },
+      {
+        
+            path: 'notification',
+            component: NotificationComponent,
+            canActivate: [ LoginGuard ]
+          },
   {
 
     path: '**',

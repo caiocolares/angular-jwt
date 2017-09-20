@@ -1,0 +1,89 @@
+<!-- COMPONENT: collection -->
+<section 
+class="collection bg section"
+[ngStyle]="{ 'background-image': 'url(' + login_bg + ')' }">
+
+
+
+<div class="container">
+  <div style="height: 75px" ></div>
+
+  <p
+     *ngIf="message && showMessage"
+     class="alert alert-success col-md-12">
+
+  {{ message }}
+  <i class="fa fa-check" aria-hidden="true"></i>
+  </p>
+
+   <div class="panel panel-primary">
+
+    <div class="panel-heading clearfix">    
+      <h4 class="panel-title pull-left" style="padding-top: 7.5px;">Especificações dos Produtos</h4>
+      <div class="btn-group pull-right">        
+        <button type="button" pButton icon="fa-plus" style="float:left" (click)="add()"></button>
+      </div>
+    </div>
+
+    <div class="panel-body">
+
+      <div class="row">
+
+        <p-dataTable 
+           [value]="specifications" 
+           selectionMode="single" 
+           [(selection)]="specification" 
+           (onRowSelect)="onRowSelect($event)"
+           [rows]="10" 
+           [paginator]="true" 
+           [pageLinks]="3" 
+           [responsive]="true" 
+           [stacked]="stacked">
+
+          <p-column field="id" header="Código"></p-column>
+          <p-column field="name" header="Descrição"></p-column>                          
+        </p-dataTable>
+      </div>
+
+    </div>
+
+  </div>
+
+  
+</div>
+
+
+  <p-dialog 
+     header="Especificação (Edição)" 
+     [(visible)]="displayDialog" 
+     [responsive]="true" 
+     [width]="380" showEffect="fade" 
+     [modal]="true">
+    
+    <div class="ui-grid ui-grid-responsive ui-fluid" *ngIf="specification">
+
+          <label>Nome</label>
+          
+                    <input 
+                      type="text" 
+                      class="form-control" 
+                      [(ngModel)]="specification.name"
+                      placeholder="Nome"
+                      required
+                      name="name">            
+
+        <label>Valores</label>
+        <p-chips [(ngModel)]="specification.values"></p-chips>       
+      </div>
+      
+      <p-footer>
+        <div class="ui-dialog-buttonpane ui-helper-clearfix">            
+          <button type="button" pButton icon="fa-check" (click)="save()" label="Salvar"></button>
+        </div>
+      </p-footer>
+  </p-dialog>
+
+
+
+<powered></powered>
+</section>

@@ -11,7 +11,11 @@ import { Category } from "../models/category.model";
 import { Catalog } from '../models/catalog.model';
 import { CatalogService } from '../services/catalog.service';
 
+import { SpecificationService } from '../services/specification.service';
+
 import { Properties } from '../models/properties';
+import { Specification } from '../models/specification';
+import { Feature } from '../models/feature';
 
 @Component({
 
@@ -36,10 +40,18 @@ export class ProductComponent implements OnInit {
   catalogs : SelectItem[] = [];
 
   properties = new Properties();
+
+  displayImages : boolean = false;
+  displayFeatures : boolean = false;
+
+  specifications : Specification[] = [];
+  specification : Specification = new Specification();
+  values = [];
   
 
   constructor( private _productService: ProductService,
                 private _catalogService : CatalogService,
+                private _specificationService : SpecificationService,
                 private _categoryService: CategoryService) { }
 
   ngOnInit() { 
@@ -51,6 +63,10 @@ export class ProductComponent implements OnInit {
 
     this._catalogService.getItem()
         .subscribe( catalogs => this.fillCatalogs(catalogs));
+
+    this._specificationService.list()
+          .subscribe(list => this.specifications = list,
+                      error => console.log(error));
 
   };
 
@@ -66,7 +82,6 @@ export class ProductComponent implements OnInit {
   };
 
   add() {
-    this.imageUrlGet = 'https://www.sistemaintegrado.com.br/si/cdn/img/0/0/crop/60/default.jpg';
     this.product = new Product();
     this.displayDialog = true;
     this.showFileUploader = false;
@@ -80,40 +95,62 @@ export class ProductComponent implements OnInit {
       this.product.images = [];
     }
     this.displayDialog = true;
-    this.showSectorSelect = true;
-    this.showFileUploader = true;
-    this.imageUrlGet = this.properties.path+'/image/' + this.product.id.enterpriseId + '/';
-    this.imageUrlPost = this.properties.path+'/product/' + this.product.id.productId + '/image/add';
+    this.showSectorSelect = true;    
   };
+
+
+  addImage(product){
+    this.product = product;
+    if(this.product == undefined){
+      this.product.images = [];
+    }
+    this.displayImages = true;    
+    this.showFileUploader = true;
+    this.imageUrlGet = this.properties.resources + this.product.id.enterpriseId + '/';
+    this.imageUrlPost = this.properties.path+'/product/' + this.product.id.productId + '/image/add';
+  }
+
+  onSpecificationSelect(event){
+    this.specification = event.data;
+    console.log(this.specification);    
+  }
+
+  addFeature(product){
+    console.log(product);
+    this.product = product;    
+    this.displayFeatures = true;    
+  }
+
+  saveFeature(){
+    let feature = new Feature();
+    feature.values = this.values;
+    feature.feature = this.specification.name;
+    this._productService.addFeature(this.product,feature)
+          .subscribe(resp => {console.log(resp);
+                              this.displayFeatures = false;
+                              
+                              });
+  }
 
   private onBeforeSend( event ) { 
-
     var currentUser = JSON.parse( localStorage.getItem( 'currentUser' ) );
-
-    event.xhr.setRequestHeader(
-
-      "Authorization", this.token = currentUser && currentUser.token
-    );  
+    event.xhr.setRequestHeader("Authorization", this.token = currentUser && currentUser.token);  
   };
 
-  private _listItems() {
-
+private _listItems() {
     this._productService.getItem()
                         .subscribe(
-
                            products => this.products = products,
                            () => console.log( 'Não foi possível carregar os produtos' ) )
-  };
-
-
+};
 
   insert() {
-
-    this._productService.insertItem( this.product )
-      .subscribe(
-
-        res => {console.log( res );this.displayDialog = false;this._listItems();},
-        erro => console.log( erro )
+    this._productService
+          .insertItem( this.product )
+          .subscribe( res => {console.log( res );
+                              this.displayDialog = false;
+                              this._listItems();},
+                      erro => console.log( erro )
       )
   };
 

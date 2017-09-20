@@ -8,10 +8,10 @@
            header="Cadastro de produtos" 
            [(visible)]="displayDialog" 
            [responsive]="true" 
-           [style]="{'width': '100%'}"
+           [width]="850"
+           [positionTop]="50"
            showEffect="fade" 
            [modal]="true">
-<div class="container">
     <div class="row">
         <div class="col-md-3">
         <label>Referência</label>
@@ -43,7 +43,9 @@
            placeholder="Selecione uma categoria">
         </p-dropdown>
         </div>
-        <div class="col-md-6">
+      </div>
+      <div class="row">
+        <div class="col-md-9">
         <label>Descrição</label>
         <input 
            class="form-control" 
@@ -55,19 +57,10 @@
       <div class="col-md-3">
           <p-listbox [options]="catalogs" [(ngModel)]="product.catalogs" multiple="multiple" checkbox="checkbox" filter="filter"></p-listbox>          
       </div>
-      <div class="col-md-3">
-           <div *ngIf="showFileUploader" class="row custom-margin-bottom">
-        <label>Imagem</label>
-        <p-fileUpload 
-           name="file" 
-           (onBeforeSend)="onBeforeSend($event)"
-           url="{{imageUrlPost}}" 
-           (onError)="onError"
-           auto="auto" accept="image/*">
-        </p-fileUpload>            
     </div>
-      </div>
-      <div class="col-md-10">
+    <div class="row">
+      
+      <div class="col-md-12">
         <label>Detalhes e Observações do Produto</label>
               <textarea 
            class="form-control" 
@@ -76,23 +69,94 @@
            [(ngModel)]="product.detail">
         </textarea>
         </div>
-        <div class="col-md-2">
-             <button class="btn btn-primary" (click)="insert()">Salvar</button>
-        </div>
-
+        
+      </div>        
+  <p-footer>
+      <div class="ui-dialog-buttonpane ui-helper-clearfix">            
+          <button class="btn btn-primary" (click)="insert()">Salvar</button>
       </div>
-      
-    <div *ngIf="showFileUploader" class="row">
-        <div class="col-md-12">
-          <p-carousel [value]="product.images">
-              <ng-template let-item let-i="index" pTemplate="item">
-                <img src="{{imageUrlGet}}{{item}}.jpeg" style=" max-height: 200px " >
-              </ng-template>
-          </p-carousel>
-      </div>
-    </div>
-</div>
+  </p-footer>
 </p-dialog>
+
+<p-dialog 
+    header="Variações do produtos" 
+    [(visible)]="displayFeatures" 
+    [responsive]="true" 
+    [width]="750"
+    [positionTop]="50"
+    showEffect="fade" 
+    [modal]="true">
+  
+    <div *ngIf="displayFeatures">
+        
+        <div class="ui-g">
+          <div class="ui-g-4">                    
+
+            <p-dataTable 
+                    [value]="specifications" 
+                    selectionMode="single" 
+                    (onRowSelect)="onSpecificationSelect($event)"
+                    [(selection)]="specification"                     
+                    [rows]="10" 
+                    [paginator]="true" 
+                    [pageLinks]="3" 
+                    [responsive]="true" 
+                    [stacked]="stacked">
+                    <p-column field="name" header="Variação"></p-column>
+            </p-dataTable>
+
+          </div>
+
+          <div class="ui-g-5">
+
+              <p-pickList [source]="specification.values" [target]="values">
+                  <ng-template let-value pTemplate="item">                                                
+                      <div>{{value}}</div>                      
+                  </ng-template>
+              </p-pickList>
+
+          </div>
+
+        </div>
+      </div>
+      <p-footer>
+          <div class="ui-dialog-buttonpane ui-helper-clearfix">            
+            <button type="button" pButton icon="fa-check" (click)="saveFeature()" label="Salvar"></button>
+          </div>
+      </p-footer>
+</p-dialog>
+
+<p-dialog header="Imagens do produtos" 
+      [(visible)]="displayImages" 
+      [responsive]="true" 
+      showEffect="fade" 
+      [width]="750"
+      [positionTop]="50"
+      [modal]="true">
+
+      <div *ngIf="showFileUploader" class="row custom-margin-bottom">
+          <label>Imagem</label>
+          <p-fileUpload 
+            name="file" 
+            (onBeforeSend)="onBeforeSend($event)"
+            url="{{imageUrlPost}}" 
+            (onError)="onError"
+            auto="auto" accept="image/*">
+          </p-fileUpload>            
+      </div>
+    <div *ngIf="showFileUploader" class="row">
+          <div class="col-md-12">
+            <p-carousel [value]="product.images">
+                <ng-template let-item let-i="index" pTemplate="item">
+                  <img src="{{imageUrlGet}}{{item}}" style=" max-height: 200px " >
+                </ng-template>
+            </p-carousel>
+        </div>      
+    </div>
+</p-dialog>
+
+
+
 
   <div class="container">
 
@@ -136,6 +200,16 @@
 
           <p-column field="name" header="Nome"></p-column>
           <p-column field="category.name" header="Categoria"></p-column>
+          <p-column>
+            <ng-template let-prod="rowData" pTemplate="body">
+              <button type="button" (click)="addImage(prod)" pButton icon="fa-picture-o" label="Adicionar Imagem" ></button>
+            </ng-template>
+          </p-column>
+          <p-column>
+            <ng-template let-prod="rowData" pTemplate="body">
+              <button type="button" (click)="addFeature(prod)" pButton icon="fa-plus-square-o" label="Adicionar Variacão" ></button>
+            </ng-template>
+          </p-column>      
         </p-dataTable>
       </div>
       <div class="col-md-12">

@@ -12,7 +12,8 @@ import {
   DialogModule,
   ButtonModule,
   CarouselModule,
-  ListboxModule
+  ListboxModule,
+  PickListModule
 } from 'primeng/primeng';
 
 import { ProductService } from "../services/product.service";
@@ -38,7 +39,7 @@ import { FooterPoweredModule } from "../footer-powered/footer-powered.module";
     ButtonModule,
     CarouselModule,
     ListboxModule,
-
+    PickListModule,
     FooterPoweredModule
   ],
   declarations: [
